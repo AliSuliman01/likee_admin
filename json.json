@@ -1,0 +1,52 @@
+{
+    "tables": [
+        {
+            "table_name": "requests",
+            "entity_name": "Request",
+            "base_path": "Requests",
+            "operation": "crud",
+            "columns": [
+                {
+                    "type": "integer",
+                    "name": "id"
+                },
+                {
+                    "type": "string",
+                    "name": "name"
+                },
+                {
+                    "type": "integer",
+                    "name": "operation_id"
+                },
+                {
+                    "type": "integer",
+                    "name": "is_succeed"
+                },
+                {
+                    "type": "integer",
+                    "name": "is_failed"
+                },
+                {
+                    "type": "string",
+                    "name": "post_url"
+                },
+                {
+                    "type": "integer",
+                    "name": "user_type"
+                },
+                {
+                    "type": "integer",
+                    "name": "requested_amount"
+                },
+                {
+                    "type": "string",
+                    "name": "requested_comment"
+                },
+                {
+                    "type": "integer",
+                    "name": "number_of_page_posts"
+                }
+            ]
+        }
+    ]
+}
