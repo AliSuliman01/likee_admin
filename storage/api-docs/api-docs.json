@@ -1,0 +1,204 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "L5 OpenApi",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "darius@matulionis.lt"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
+        }
+    },
+    "paths": {
+        "/api/accounts": {
+            "get": {
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "Returns all accounts",
+                "description": "Returns a map of status codes to quantities",
+                "operationId": "getAccounts",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "Returns all accounts",
+                "description": "Returns a map of status codes to quantities",
+                "operationId": "storeAccount",
+                "requestBody": {
+                    "description": "order placed for purchasing th pet",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Account"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/api/accounts/1": {
+            "get": {
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "Returns all accounts",
+                "description": "Returns a map of status codes to quantities",
+                "operationId": "getAccount",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "Returns all accounts",
+                "description": "Returns a map of status codes to quantities",
+                "operationId": "updateAccount",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "Returns all accounts",
+                "description": "Returns a map of status codes to quantities",
+                "operationId": "deleteAccount",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Account": {
+                "title": "Account model",
+                "description": "Account model",
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "type": "string",
+                        "default": "admin@test.com"
+                    },
+                    "phone_number": {
+                        "title": "phone_number",
+                        "type": "string",
+                        "default": "0966666666"
+                    },
+                    "password": {
+                        "title": "password",
+                        "type": "string",
+                        "default": "123456"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
