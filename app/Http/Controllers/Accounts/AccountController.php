@@ -53,18 +53,20 @@ class AccountController extends Controller
      * @OA\Get(
      *     path="/api/accounts/1",
      *     tags={"accounts"},
-     *     summary="Returns all accounts",
+     *     summary="Returns one account by id",
      *     description="Returns a map of status codes to quantities",
      *     operationId="getAccount",
-     *     @OA\Response(
-     *         response=200,
-     *         description="successful operation",
-     *         @OA\JsonContent(
-     *             @OA\AdditionalProperties(
-     *                 type="integer",
-     *                 format="int32"
-     *             )
-     *         )
+     * @OA\Response(
+     *    response=200,
+     *    description="added successfully",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="true"),
+     *       @OA\Property(property="hasContent", type="boolean", example="true"),
+     *       @OA\Property(property="code", type="integer", example="200"),
+     *       @OA\Property(property="message", type="string"),
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Account"),
+     *
+     *        )
      *     ),
      *     security={
      *         {"api_key": {}}
@@ -80,23 +82,41 @@ class AccountController extends Controller
      * @OA\Post(
      *     path="/api/accounts",
      *     tags={"accounts"},
-     *     summary="Returns all accounts",
+     *     summary="Stores one account",
      *     description="Returns a map of status codes to quantities",
      *     operationId="storeAccount",
-     *     @OA\RequestBody(
-     *         description="order placed for purchasing th pet",
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Account")
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Pass account credentials",
+     *    @OA\JsonContent(
+     *       required={"email","password"},
+     *       @OA\Property(property="email", type="string", format="email", example="admin@test.com"),
+     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Wrong credentials response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="false"),
+     *       @OA\Property(property="hasContent", type="boolean", example="false"),
+     *       @OA\Property(property="code", type="string", example="422"),
+     *       @OA\Property(property="message", type="string", example="invalid credentials"),
+     *       @OA\Property(property="detailed_error", example="null"),
+     *       @OA\Property(property="data", example="null"),
+     *        )
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="successful operation",
-     *         @OA\JsonContent(
-     *             @OA\AdditionalProperties(
-     *                 type="integer",
-     *                 format="int32"
-     *             )
-     *         )
+     * @OA\Response(
+     *    response=200,
+     *    description="added successfully",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="true"),
+     *       @OA\Property(property="hasContent", type="boolean", example="true"),
+     *       @OA\Property(property="code", type="integer", example="200"),
+     *       @OA\Property(property="message", type="string"),
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Account"),
+     *
+     *        )
      *     ),
      *     security={
      *         {"api_key": {}}
@@ -114,28 +134,6 @@ class AccountController extends Controller
         return response()->json(Response::success((new AccountGetVM($account))->toArray()));
     }
 
-    /**
-     * @OA\Put(
-     *     path="/api/accounts/1",
-     *     tags={"accounts"},
-     *     summary="Returns all accounts",
-     *     description="Returns a map of status codes to quantities",
-     *     operationId="updateAccount",
-     *     @OA\Response(
-     *         response=200,
-     *         description="successful operation",
-     *         @OA\JsonContent(
-     *             @OA\AdditionalProperties(
-     *                 type="integer",
-     *                 format="int32"
-     *             )
-     *         )
-     *     ),
-     *     security={
-     *         {"api_key": {}}
-     *     }
-     * )
-     */
     public function update(Account $account, AccountUpdateRequest $request){
 
         $data = $request->validated() ;
@@ -147,28 +145,6 @@ class AccountController extends Controller
         return response()->json(Response::success((new AccountGetVM($account))->toArray()));
     }
 
-    /**
-     * @OA\Delete(
-     *     path="/api/accounts/1",
-     *     tags={"accounts"},
-     *     summary="Returns all accounts",
-     *     description="Returns a map of status codes to quantities",
-     *     operationId="deleteAccount",
-     *     @OA\Response(
-     *         response=200,
-     *         description="successful operation",
-     *         @OA\JsonContent(
-     *             @OA\AdditionalProperties(
-     *                 type="integer",
-     *                 format="int32"
-     *             )
-     *         )
-     *     ),
-     *     security={
-     *         {"api_key": {}}
-     *     }
-     * )
-     */
     public function destroy(Account $account){
 
         return response()->json(Response::success(AccountDestroyAction::execute($account)));
