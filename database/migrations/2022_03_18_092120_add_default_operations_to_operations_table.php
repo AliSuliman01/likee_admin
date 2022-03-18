@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,9 +14,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('operations', function (Blueprint $table) {
-            //
-        });
+        $operations = config('constants.operations');
+
+        foreach ($operations as $name => $id){
+            DB::table('operations')->insert([
+               'id' =>  $id,
+               'name' =>  $name,
+            ]);
+        }
     }
 
     /**
