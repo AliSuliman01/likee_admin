@@ -30,10 +30,61 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "additionalProperties": {
-                                        "type": "integer",
-                                        "format": "int32"
-                                    }
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Account"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "401"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "unauthenticated"
+                                        },
+                                        "data": {
+                                            "example": "null"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -143,6 +194,37 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "401"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "unauthenticated"
+                                        },
+                                        "data": {
+                                            "example": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -184,6 +266,37 @@
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/Account"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "401"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "unauthenticated"
+                                        },
+                                        "data": {
+                                            "example": "null"
                                         }
                                     },
                                     "type": "object"

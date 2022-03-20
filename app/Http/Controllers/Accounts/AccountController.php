@@ -20,7 +20,7 @@ class AccountController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('auth.rest')->only(['store','update','destroy']);
+        $this->middleware('auth')->only(['store','update','destroy']);
     }
     /**
      * @OA\Get(
@@ -33,11 +33,26 @@ class AccountController extends Controller
      *         response=200,
      *         description="successful operation",
      *         @OA\JsonContent(
-     *             @OA\AdditionalProperties(
-     *                 type="integer",
-     *                 format="int32"
-     *             )
+     *
+     *       @OA\Property(property="isSuccessful", type="boolean", example="true"),
+     *       @OA\Property(property="hasContent", type="boolean", example="true"),
+     *       @OA\Property(property="code", type="integer", example="200"),
+     *       @OA\Property(property="message", type="string"),
+     *       @OA\Property(property="data", type="array", @OA\Items (ref="#/components/schemas/Account")),
+     *
      *         )
+     *     ),
+     * @OA\Response(
+     *    response=401,
+     *    description="unauthenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="false"),
+     *       @OA\Property(property="hasContent", type="boolean", example="false"),
+     *       @OA\Property(property="code", type="integer", example="401"),
+     *       @OA\Property(property="message", type="string", example="unauthenticated"),
+     *       @OA\Property(property="data", example="null"),
+     *
+     *        )
      *     ),
      *     security={
      *         {"api_key": {}}
@@ -68,6 +83,18 @@ class AccountController extends Controller
      *
      *        )
      *     ),
+     * @OA\Response(
+     *    response=401,
+     *    description="unauthenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="false"),
+     *       @OA\Property(property="hasContent", type="boolean", example="false"),
+     *       @OA\Property(property="code", type="integer", example="401"),
+     *       @OA\Property(property="message", type="string", example="unauthenticated"),
+     *       @OA\Property(property="data", example="null"),
+     *
+     *        )
+     *     ),
      *     security={
      *         {"api_key": {}}
      *     }
@@ -75,7 +102,7 @@ class AccountController extends Controller
      */
     public function show(Account $account){
 
-        return response()->json(Response::success((new AccountGetVM($account  ))->toArray()));
+        return response()->json(Response::success((new AccountGetVM($account))->toArray()));
     }
 
     /**
@@ -115,6 +142,18 @@ class AccountController extends Controller
      *       @OA\Property(property="code", type="integer", example="200"),
      *       @OA\Property(property="message", type="string"),
      *       @OA\Property(property="data", type="object", ref="#/components/schemas/Account"),
+     *
+     *        )
+     *     ),
+     * @OA\Response(
+     *    response=401,
+     *    description="unauthenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="false"),
+     *       @OA\Property(property="hasContent", type="boolean", example="false"),
+     *       @OA\Property(property="code", type="integer", example="401"),
+     *       @OA\Property(property="message", type="string", example="unauthenticated"),
+     *       @OA\Property(property="data", example="null"),
      *
      *        )
      *     ),
