@@ -22,6 +22,6 @@ class GeneralException extends Exception
     }
     public function render(Request $request)
     {
-        return response()->json(Response::error($this->message,$this->detailed_error,$this->code));
+        return response()->json(Response::error($this->message,$this->detailed_error,$this->code),$this->code);
     }
 }

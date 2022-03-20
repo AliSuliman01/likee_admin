@@ -16,11 +16,19 @@ use App\Http\Requests\Accounts\AccountUpdateRequest;
 use App\Http\ViewModels\Accounts\AccountGetVM;
 use App\Http\ViewModels\Accounts\AccountGetAllVM;
 
+/**
+ *
+ * @OAS\SecurityScheme(
+ *      securityScheme="bearer_token",
+ *      type="http",
+ *      scheme="bearer"
+ * )
+ */
 class AccountController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('auth')->only(['store','update','destroy']);
+        $this->middleware('auth');
     }
     /**
      * @OA\Get(
@@ -55,7 +63,7 @@ class AccountController extends Controller
      *        )
      *     ),
      *     security={
-     *         {"api_key": {}}
+     *         {"bearer_token": {}}
      *     }
      * )
      */
@@ -96,7 +104,7 @@ class AccountController extends Controller
      *        )
      *     ),
      *     security={
-     *         {"api_key": {}}
+     *         {"bearer_token": {}}
      *     }
      * )
      */
@@ -158,7 +166,7 @@ class AccountController extends Controller
      *        )
      *     ),
      *     security={
-     *         {"api_key": {}}
+     *         {"bearer_token": {}}
      *     }
      * )
      */

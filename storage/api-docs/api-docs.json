@@ -92,7 +92,7 @@
                 },
                 "security": [
                     {
-                        "api_key": []
+                        "bearer_token": []
                     }
                 ]
             },
@@ -229,7 +229,7 @@
                 },
                 "security": [
                     {
-                        "api_key": []
+                        "bearer_token": []
                     }
                 ]
             }
@@ -307,6 +307,114 @@
                 },
                 "security": [
                     {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "login by email",
+                "description": "Returns an auth token",
+                "operationId": "Login",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@test.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "string",
+                                            "example": "422"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "invalid credentials"
+                                        },
+                                        "detailed_error": {
+                                            "example": "null"
+                                        },
+                                        "data": {
+                                            "example": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/AuthUser"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
                         "api_key": []
                     }
                 ]
@@ -336,6 +444,35 @@
                     }
                 },
                 "type": "object"
+            },
+            "AuthUser": {
+                "title": "AuthUser model",
+                "description": "AuthUser model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "type": "string",
+                        "default": 1
+                    },
+                    "email": {
+                        "title": "email",
+                        "type": "string",
+                        "default": "admin@test.com"
+                    },
+                    "auth_token": {
+                        "title": "auth_token",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
             }
         }
     },

@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 return new class extends Migration
 {
@@ -17,7 +18,10 @@ return new class extends Migration
     {
         DB::table('users')->insertGetId([
             'email' => 'admin@test.com',
-            'password' => Hash::make('123456')
+            'password' => Hash::make('123456'),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'api_token' => Str::random(60)
         ]);
     }
 

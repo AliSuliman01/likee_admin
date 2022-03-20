@@ -14,7 +14,7 @@ abstract class ApiFormRequest extends FormRequest
     {
         $e = (new ValidationException($validator));
 
-        throw new GeneralException(collect($e->errors())->first()[0],$e->getTrace(),config('constants.status_code.unprocessable_entity'));
+        throw new GeneralException(collect($e->errors())->first()[0],$e->getTrace(),config('constants.status_code.UNPROCESSABLE_ENTITY'));
     }
     public function validationData(): array
     {
