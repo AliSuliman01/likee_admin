@@ -101,7 +101,7 @@
                     "accounts"
                 ],
                 "summary": "Stores one account",
-                "description": "Returns a map of status codes to quantities",
+                "description": "Returns the new account",
                 "operationId": "storeAccount",
                 "requestBody": {
                     "description": "Pass account credentials",
@@ -234,7 +234,7 @@
                 ]
             }
         },
-        "/api/accounts/1": {
+        "/api/accounts/{account}": {
             "get": {
                 "tags": [
                     "accounts"
@@ -242,7 +242,278 @@
                 "summary": "Returns one account by id",
                 "description": "Returns a map of status codes to quantities",
                 "operationId": "getAccount",
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "path",
+                        "description": "the account id",
+                        "required": true
+                    }
+                ],
                 "responses": {
+                    "200": {
+                        "description": "added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Account"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "401"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "unauthenticated"
+                                        },
+                                        "data": {
+                                            "example": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "Updates one account",
+                "description": "Pass the account id in the url and returns the updated account",
+                "operationId": "updateAccount",
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "path",
+                        "description": "the account id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Pass the new account credentials in the body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@test.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "string",
+                                            "example": "422"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "invalid credentials"
+                                        },
+                                        "detailed_error": {
+                                            "example": "null"
+                                        },
+                                        "data": {
+                                            "example": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Account"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": "401"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "unauthenticated"
+                                        },
+                                        "data": {
+                                            "example": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "Deletes one account",
+                "description": "Pass the account id in the url and returns the deleted account",
+                "operationId": "deleteAccount",
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "path",
+                        "description": "the account id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "isSuccessful": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "hasContent": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "code": {
+                                            "type": "string",
+                                            "example": "422"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "invalid credentials"
+                                        },
+                                        "detailed_error": {
+                                            "example": "null"
+                                        },
+                                        "data": {
+                                            "example": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "200": {
                         "description": "added successfully",
                         "content": {

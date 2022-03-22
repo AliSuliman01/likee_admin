@@ -74,12 +74,18 @@ class AccountController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/accounts/1",
+     *     path="/api/accounts/{account}",
      *     tags={"accounts"},
      *     summary="Returns one account by id",
      *     description="Returns a map of status codes to quantities",
      *     operationId="getAccount",
-     * @OA\Response(
+     *      @OA\Parameter(
+     *         name="account",
+     *         in="path",
+     *         description="the account id",
+     *         required=true
+     *      ),
+     *     * @OA\Response(
      *    response=200,
      *    description="added successfully",
      *    @OA\JsonContent(
@@ -118,7 +124,7 @@ class AccountController extends Controller
      *     path="/api/accounts",
      *     tags={"accounts"},
      *     summary="Stores one account",
-     *     description="Returns a map of status codes to quantities",
+     *     description="Returns the new account",
      *     operationId="storeAccount",
      * @OA\RequestBody(
      *    required=true,
@@ -181,6 +187,69 @@ class AccountController extends Controller
         return response()->json(Response::success((new AccountGetVM($account))->toArray()));
     }
 
+    /**
+     * @OA\Put(
+     *     path="/api/accounts/{account}",
+     *     tags={"accounts"},
+     *     summary="Updates one account",
+     *     description="Pass the account id in the url and returns the updated account",
+     *     operationId="updateAccount",
+     *      @OA\Parameter(
+     *         name="account",
+     *         in="path",
+     *         description="the account id",
+     *         required=true
+     *      ),
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Pass the new account credentials in the body",
+     *    @OA\JsonContent(
+     *       required={"email","password"},
+     *       @OA\Property(property="email", type="string", format="email", example="admin@test.com"),
+     *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Wrong credentials response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="false"),
+     *       @OA\Property(property="hasContent", type="boolean", example="false"),
+     *       @OA\Property(property="code", type="string", example="422"),
+     *       @OA\Property(property="message", type="string", example="invalid credentials"),
+     *       @OA\Property(property="detailed_error", example="null"),
+     *       @OA\Property(property="data", example="null"),
+     *        )
+     *     ),
+     * @OA\Response(
+     *    response=200,
+     *    description="added successfully",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="true"),
+     *       @OA\Property(property="hasContent", type="boolean", example="true"),
+     *       @OA\Property(property="code", type="integer", example="200"),
+     *       @OA\Property(property="message", type="string"),
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Account"),
+     *
+     *        )
+     *     ),
+     * @OA\Response(
+     *    response=401,
+     *    description="unauthenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="false"),
+     *       @OA\Property(property="hasContent", type="boolean", example="false"),
+     *       @OA\Property(property="code", type="integer", example="401"),
+     *       @OA\Property(property="message", type="string", example="unauthenticated"),
+     *       @OA\Property(property="data", example="null"),
+     *
+     *        )
+     *     ),
+     *     security={
+     *         {"bearer_token": {}}
+     *     }
+     * )
+     */
     public function update(Account $account, AccountUpdateRequest $request){
 
         $data = $request->validated() ;
@@ -192,6 +261,60 @@ class AccountController extends Controller
         return response()->json(Response::success((new AccountGetVM($account))->toArray()));
     }
 
+    /**
+     * @OA\Delete (
+     *     path="/api/accounts/{account}",
+     *     tags={"accounts"},
+     *     summary="Deletes one account",
+     *     description="Pass the account id in the url and returns the deleted account",
+     *     operationId="deleteAccount",
+     *      @OA\Parameter(
+     *         name="account",
+     *         in="path",
+     *         description="the account id",
+     *         required=true
+     *      ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Wrong credentials response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="false"),
+     *       @OA\Property(property="hasContent", type="boolean", example="false"),
+     *       @OA\Property(property="code", type="string", example="422"),
+     *       @OA\Property(property="message", type="string", example="invalid credentials"),
+     *       @OA\Property(property="detailed_error", example="null"),
+     *       @OA\Property(property="data", example="null"),
+     *        )
+     *     ),
+     * @OA\Response(
+     *    response=200,
+     *    description="added successfully",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="true"),
+     *       @OA\Property(property="hasContent", type="boolean", example="true"),
+     *       @OA\Property(property="code", type="integer", example="200"),
+     *       @OA\Property(property="message", type="string"),
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Account"),
+     *
+     *        )
+     *     ),
+     * @OA\Response(
+     *    response=401,
+     *    description="unauthenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="isSuccessful", type="boolean", example="false"),
+     *       @OA\Property(property="hasContent", type="boolean", example="false"),
+     *       @OA\Property(property="code", type="integer", example="401"),
+     *       @OA\Property(property="message", type="string", example="unauthenticated"),
+     *       @OA\Property(property="data", example="null"),
+     *
+     *        )
+     *     ),
+     *     security={
+     *         {"bearer_token": {}}
+     *     }
+     * )
+     */
     public function destroy(Account $account){
 
         return response()->json(Response::success(AccountDestroyAction::execute($account)));
