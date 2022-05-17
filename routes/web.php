@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('instagram')->redirect();
+});
+
+Route::get('/api/auth/deauthorize', function () {
+
+});
+
+Route::get('/api/auth/callback', function () {
+    $user = Socialite::driver('instagram')->user();
+
+    return $user->token;
 });
