@@ -19,7 +19,9 @@ Route::get('/', function () {
 });
 
 Route::get('/auth/redirect', function () {
-    return Socialite::driver('instagram')->redirect();
+    return Socialite::driver('instagram')
+        ->setScopes(['user_profile'])
+        ->redirect();
 });
 
 Route::get('/api/auth/deauthorize', function () {
