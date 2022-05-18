@@ -20,7 +20,6 @@ Route::get('/', function () {
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('instagram')
-        ->stateless()
         ->setScopes(['user_profile'])
         ->redirect();
 });
@@ -30,7 +29,7 @@ Route::get('/api/auth/deauthorize', function () {
 });
 
 Route::get('/api/auth/callback', function () {
-    $user = Socialite::driver('instagram')->stateless()->user();
+    $user = Socialite::driver('instagram')->user();
 
     return $user->getName();
     return $user->token;
