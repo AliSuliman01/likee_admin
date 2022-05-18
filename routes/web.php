@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('instagram')
+        ->stateless()
         ->setScopes(['user_profile'])
         ->redirect();
 });
