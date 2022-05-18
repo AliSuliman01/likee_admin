@@ -29,7 +29,7 @@ Route::get('/api/auth/deauthorize', function () {
 });
 
 Route::get('/api/auth/callback', function () {
-    $user = Socialite::driver('instagram')->user();
+    $user = Socialite::driver('instagram')->stateless()->user();
 
     return $user->getName();
     return $user->token;
