@@ -155,7 +155,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', 'http://likee-admin.herokuapp.com'),
+    'domain' => env('SESSION_DOMAIN', 'https://likee-admin.herokuapp.com'),
 
     /*
     |--------------------------------------------------------------------------
