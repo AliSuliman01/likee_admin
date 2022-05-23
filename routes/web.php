@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('facebook')
+        ->stateless()
         ->redirect();
 });
 
@@ -28,7 +29,7 @@ Route::get('/api/auth/deauthorize', function () {
 });
 
 Route::get('/api/auth/callback', function () {
-    $user = Socialite::driver('facebook')->user();
+    $user = Socialite::driver('facebook')->stateless()->user();
 
     return $user;
 });
