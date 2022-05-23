@@ -19,8 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/auth/redirect', function () {
-    return Socialite::driver('instagram')
-        ->setScopes(['user_profile'])
+    return Socialite::driver('facebook')
         ->redirect();
 });
 
@@ -29,8 +28,7 @@ Route::get('/api/auth/deauthorize', function () {
 });
 
 Route::get('/api/auth/callback', function () {
-    $user = Socialite::driver('instagram')->user();
+    $user = Socialite::driver('facebook')->user();
 
-    return $user->getName();
-    return $user->token;
+    return $user;
 });
