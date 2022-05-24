@@ -37,8 +37,8 @@ return [
         'redirect' => env('INSTAGRAM_REDIRECT_URI','https://likee-admin.herokuapp.com/api/auth/callback')
     ],
     'facebook' => [
-        'client_id' => '1055157758407834',
-        'client_secret' => '07a8cc65749259204cdf01850a35300b',
+        'client_id' => '5192618307463764',
+        'client_secret' => '7ef0cf78cf851f9fba0034fba9827e82',
         'redirect' => 'https://likee-admin.herokuapp.com/api/auth/callback',
     ],
 
