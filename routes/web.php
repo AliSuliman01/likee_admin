@@ -20,8 +20,8 @@ Route::get('/', function () {
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('facebook')
-        ->stateless()
         ->scopes(['user_photos'])
+        ->stateless()
         ->redirect();
 });
 
